@@ -72,7 +72,7 @@ tempfile Decisions Corners
 
 *** (0.1) Get the decision data (Long).
 *
-use	"`dirIN'\\`FileIn01'", clear			
+use	"`dirIN'/`FileIn01'", clear			
 
 	keep id newid Budget h Ggov z y 
 
@@ -84,7 +84,7 @@ use	"`dirIN'\\`FileIn01'", clear
 
 *** (0.2) Get the corner indicators (n = 85).
 *
-use	"`dirIN'\\`FileIn02'", clear			
+use	"`dirIN'/`FileIn02'", clear			
 
 	keep id AlwaysCorn
 
@@ -127,7 +127,7 @@ local dirESTNamedoTS = "`dirESTNamedo'-`timestamp'"
 
 if ("`FileOut01'"   ~=   " ") {				// However, if a pre-existing file is
 											//	being updated then use that old filename.
-	local dirESTNamedoTS = "`dirEST'\\`FileOut01'"
+	local dirESTNamedoTS = "`dirEST'/`FileOut01'"
 }
 
 

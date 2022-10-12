@@ -28,7 +28,7 @@
 *
 * (0) Get the data.
 *
-use	"`dirIN'\\`FileIn'", clear
+use	"`dirIN'/`FileIn'", clear
 
 	describe
 

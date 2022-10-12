@@ -23,7 +23,7 @@
 *
 * (0) Get the data.
 *
-use	"`dirIN'\\`FileIn01'", clear			
+use	"`dirIN'/`FileIn01'", clear			
 
 
 

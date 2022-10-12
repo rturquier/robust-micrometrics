@@ -36,7 +36,7 @@ tempfile Decisions510	Corners
 
 *** The 85 participants x 6 decisions.
 *
-use	"`dirIN'\\`FileIn01'", clear
+use	"`dirIN'/`FileIn01'", clear
 
 	describe
 	
@@ -46,7 +46,7 @@ use	"`dirIN'\\`FileIn01'", clear
 
 *** The corner decisions (n = 85).
 *
-use	"`dirIN'\\`FileIn02'", clear
+use	"`dirIN'/`FileIn02'", clear
 
 	describe
 	

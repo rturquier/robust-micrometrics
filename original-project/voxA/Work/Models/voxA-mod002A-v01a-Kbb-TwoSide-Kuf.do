@@ -35,7 +35,7 @@
 *
 * (0.1) Get the data.
 *
-use	"`dirIN'\\`FileIn01'", clear			
+use	"`dirIN'/`FileIn01'", clear			
 
 
 
@@ -49,9 +49,9 @@ mata							// Evoke mata so that the libraries necessary to run pantob or two_si
 end
 
 
-quietly do "`dirTWOSIDE'\\two_side_mata.do"		// Programs that must be run before calling "two_side"
+quietly do "`dirTWOSIDE'/two_side_mata.do"		// Programs that must be run before calling "two_side"
 
-quietly do "`dirTWOSIDE'\\two_side_prg.do"
+quietly do "`dirTWOSIDE'/two_side_prg.do"
 
 
 
@@ -94,7 +94,7 @@ xtreg	h Ggov if (Budget==4 | Budget==6), fe	vce(robust)
 * (3) Kbb LO:	Two-sided Tobit FE 
 *
 *				[account for corners:
-*						Alan, Honoré, Hu and Leth-Petersen (2014)]
+*						Alan, Honorï¿½, Hu and Leth-Petersen (2014)]
 *
 preserve
 
@@ -119,7 +119,7 @@ two_sideWrap1		 h Ggov			Lower Upper id Budget
 
 *** (3.3) Standard errors - bootstrapped
 *
-local dirBOOTNamedo "`dirBOOT'\\`Namedo'-KbbLO-v01a"
+local dirBOOTNamedo "`dirBOOT'/`Namedo'-KbbLO-v01a"
 
 xtset , clear
 
@@ -182,7 +182,7 @@ two_sideWrap1		 h Ggov			Lower Upper id Budget
 
 *** (4.3) Standard errors - bootstrapped
 *
-local dirBOOTNamedo "`dirBOOT'\\`Namedo'-KbbHI-v01a"
+local dirBOOTNamedo "`dirBOOT'/`Namedo'-KbbHI-v01a"
 
 xtset , clear
 
@@ -250,7 +250,7 @@ two_sideWrap3		 h Ggov Ggov_GovtHigh GovtHigh 	Lower Upper id
 
 *** (5.3) Standard errors - bootstrapped
 *
-local dirBOOTNamedo "`dirBOOT'\\`Namedo'-KbbLO_and_HI-v01a"
+local dirBOOTNamedo "`dirBOOT'/`Namedo'-KbbLO_and_HI-v01a"
 
 xtset , clear
 
@@ -339,7 +339,7 @@ two_sideWrap3		 h Ggov Ggov_GovtHigh GovtHigh 	Lower Upper id
 
 *** (6.3) Standard errors - bootstrapped
 *
-local dirBOOTNamedo "`dirBOOT'\\`Namedo'-KufLO_and_HI-v01a"
+local dirBOOTNamedo "`dirBOOT'/`Namedo'-KufLO_and_HI-v01a"
 
 xtset , clear
 

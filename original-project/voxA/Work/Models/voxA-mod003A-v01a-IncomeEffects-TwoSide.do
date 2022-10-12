@@ -21,7 +21,7 @@
 *
 * (0.1) Get the data.
 *
-use	"`dirIN'\\`FileIn01'", clear			
+use	"`dirIN'/`FileIn01'", clear			
 
 
 
@@ -35,9 +35,9 @@ mata							// Evoke mata so that the libraries necessary to run pantob or two_si
 end
 
 
-quietly do "`dirTWOSIDE'\\two_side_mata.do"		// Programs that must be run before calling "two_side"
+quietly do "`dirTWOSIDE'/two_side_mata.do"		// Programs that must be run before calling "two_side"
 
-quietly do "`dirTWOSIDE'\\two_side_prg.do"
+quietly do "`dirTWOSIDE'/two_side_prg.do"
 
 
 
@@ -119,7 +119,7 @@ two_sideWrap3		 h y y_GovtHigh GovtHigh 	Lower Upper id
 
 *** (3.3) Standard errors - bootstrapped
 *
-local dirBOOTNamedo "`dirBOOT'\\`Namedo'-IncomeEffectLO_and_HI-v01a"
+local dirBOOTNamedo "`dirBOOT'/`Namedo'-IncomeEffectLO_and_HI-v01a"
 
 xtset , clear
 

@@ -20,7 +20,7 @@
 *
 * (0) Get the data.
 *
-use	"`dirEST'\\`FileIn01'", clear
+use	"`dirEST'/`FileIn01'", clear
 
 	describe
 

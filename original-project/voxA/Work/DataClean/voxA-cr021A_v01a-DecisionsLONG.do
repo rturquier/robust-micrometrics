@@ -31,7 +31,7 @@
 *
 tempfile Decisions	Boundary
 
-use	"`dirIN'\\`FileIn01'", clear
+use	"`dirIN'/`FileIn01'", clear
 
 	describe
 
@@ -40,7 +40,7 @@ use	"`dirIN'\\`FileIn01'", clear
 	save `Decisions'
 	
 	
-use	"`dirIN'\\`FileIn02'", clear
+use	"`dirIN'/`FileIn02'", clear
 
 	describe
 

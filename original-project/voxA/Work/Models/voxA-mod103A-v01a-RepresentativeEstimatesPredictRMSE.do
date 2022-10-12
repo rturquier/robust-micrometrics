@@ -34,7 +34,7 @@ tempfile DecisionsWIDE 		alpha85
 
 *** (0.1) Get the decision data (Long).
 *
-use	"`dirIN'\\`FileIn01'", clear			
+use	"`dirIN'/`FileIn01'", clear			
 
 	save `DecisionsWIDE'
 	
@@ -46,7 +46,7 @@ use	"`dirIN'\\`FileIn01'", clear
 *		Note: We need this file ONLY to figure out which
 *				participants had missing alpha, beta.
 *
-use	"`dirEST'\\`FileIn02'", clear
+use	"`dirEST'/`FileIn02'", clear
 
 keep newid alpha
 

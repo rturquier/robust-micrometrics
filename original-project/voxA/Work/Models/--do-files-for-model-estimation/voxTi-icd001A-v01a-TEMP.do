@@ -64,7 +64,7 @@ For each participant:
 
 *** (0.1) Get the data
 *
-use	"`dirIN'\\`FileIn01'", clear			
+use	"`dirIN'/`FileIn01'", clear			
 
 keep id newid Budget h Ggov z y 
 
@@ -88,7 +88,7 @@ local minute = substr("$S_TIME", 4, 2)
 
 local timestamp = trim("`date'--`hour'-`minute'")
 
-global mmm = "`dirMAT'\\icd-`timestamp'"
+global mmm = "`dirMAT'/icd-`timestamp'"
 
 * The matrix
 mata:
@@ -506,14 +506,14 @@ STOP HERE 2017-06-19 ..............................................
 			
 			
 			
-		mata matuse "`dirMAT'\\icd-`timestamp'"				// Get the saved matrix of estimates
+		mata matuse "`dirMAT'/icd-`timestamp'"				// Get the saved matrix of estimates
 
 		i		= strtoreal(st_local("participant"))		// Participant number
 		Brow	= st_matrix("B")							// Estimates: alpha, beta, sigma
 	
 		$icdName[i, .] = (i, Brow)							// Store the estimates
 	
-		mata matsave "`dirMAT'\\icd-`timestamp'"	$icdName, replace	// Save the matrix of estimates
+		mata matsave "`dirMAT'/icd-`timestamp'"	$icdName, replace	// Save the matrix of estimates
 
 	end	
 
@@ -607,11 +607,11 @@ For each participant:
 ---------------------------------------------------
 *** Code to list the matrix.
 *
-local dirMAT		"C:\Users\mowilhel\Documents\voxT\Work\Models\Matrices" 
+local dirMAT		"C:/Users/mowilhel/Documents/voxT/Work/Models/Matrices" 
 
 mata:
 	mata clear
-	mata matuse "`dirMAT'\\icd-2017-06-19--16-15"	// Get the saved matrix of estimates
+	mata matuse "`dirMAT'/icd-2017-06-19--16-15"	// Get the saved matrix of estimates
 	
 	$icdName									// List the matrix
 end		
@@ -621,6 +621,6 @@ end
 
 
 
-*	mata matuse "`dirMAT'\\icd-2017-06-17--12-59"	// Get the saved matrix of estimates
+*	mata matuse "`dirMAT'/icd-2017-06-17--12-59"	// Get the saved matrix of estimates
 
 

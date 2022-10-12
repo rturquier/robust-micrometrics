@@ -20,7 +20,7 @@
 *
 capture log close _all
 
-log using 		"`dirLog'\\`Namedo'.log", replace name(master)
+log using 		"`dirLog'/`Namedo'.log", replace name(master)
 
 
 * *** *** *** *** *** *** *** *** *** *** *** *** *** *** *	

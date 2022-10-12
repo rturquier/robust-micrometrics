@@ -33,21 +33,21 @@ tempfile 	Decisions 		Survey 		Order	smallApril
 
 *** Decisions
 *
-insheet using "`dirSourceIN'\\`FileIn01'", clear names
+insheet using "`dirSourceIN'/`FileIn01'", clear names
 
 	save `Decisions'
 	
 	
 *** Survey responses
 *
-insheet using "`dirSourceIN'\\`FileIn02'", clear names
+insheet using "`dirSourceIN'/`FileIn02'", clear names
 	
 	save `Survey'
 	
 
 *** Order in which the participant faced the decisions.
 *
-insheet using "`dirSourceIN'\\`FileIn03'", clear names
+insheet using "`dirSourceIN'/`FileIn03'", clear names
 	
 	save `Order'
 
@@ -61,7 +61,7 @@ insheet using "`dirSourceIN'\\`FileIn03'", clear names
 *			to work with than is "id".  But ther e is a one-to-one mapping 
 *			between "id" and "newid".
 *
-use "`dirSourceIN'\\`NewIDin'", clear
+use "`dirSourceIN'/`NewIDin'", clear
 
 keep id newid
 

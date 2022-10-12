@@ -39,7 +39,7 @@
 *
 * (0.1) Get the data.
 *
-use	"`dirIN'\\`FileIn01'", clear			
+use	"`dirIN'/`FileIn01'", clear			
 
 keep id h1 h2 h3 h4 h5 h6 Ggov1 Ggov2 Ggov3 Ggov4 Ggov5 Ggov6 ///
 		z1 z2 z3 z4 z5 z6 y1 y2 y3 y4 y5 y6 

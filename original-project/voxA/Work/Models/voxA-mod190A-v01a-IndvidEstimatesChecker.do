@@ -35,7 +35,7 @@ tempfile Old
 *
 mata:
 	mata clear
-	mata matuse "`dirMAT'\\`MatrixIn01'"
+	mata matuse "`dirMAT'/`MatrixIn01'"
 end
 
 
@@ -54,7 +54,7 @@ label variable sigmaOLD "rmse from Older file"	// root mean-squared error
 	
 *** 0.2 Second set of estimates, and merge.
 *
-use "`dirEST'\\`FileIn01'" , clear
+use "`dirEST'/`FileIn01'" , clear
 
 
 merge 1:1	newid	using `Old', assert(match) nogenerate

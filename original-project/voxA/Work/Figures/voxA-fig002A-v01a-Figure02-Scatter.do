@@ -23,7 +23,7 @@
 *
 mata:
 	mata clear
-	mata matuse "`dirMAT'\\`MatrixIn01'"
+	mata matuse "`dirMAT'/`MatrixIn01'"
 end
 
 

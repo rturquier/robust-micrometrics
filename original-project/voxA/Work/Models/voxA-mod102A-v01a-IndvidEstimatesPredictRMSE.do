@@ -31,14 +31,14 @@ tempfile DecisionsWIDE 		alpha85
 
 *** (0.1) Get the decision data (Long).
 *
-use	"`dirIN'\\`FileIn01'", clear			
+use	"`dirIN'/`FileIn01'", clear			
 
 	save `DecisionsWIDE'
 	
 
 *** (0.2) Get the estimates (n = 85).
 *
-use	"`dirEST'\\`FileIn02'", clear
+use	"`dirEST'/`FileIn02'", clear
 	
 		save `alpha85'
 	
