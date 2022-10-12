@@ -12,7 +12,7 @@
 *** (1) Log
 *
 clear all
-local dirLog		"`Root'/voxA/Work/DataClean/Log Files"
+local dirLog		"`Root'/voxA/Work/DataClean/Log-Files"
 
 	if "`Namedo'" ~= "voxA-cr199A_v01a-Master" {
 		capture log close log1
