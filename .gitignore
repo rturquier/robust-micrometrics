@@ -1,0 +1,15 @@
+# This lists the things that should not be synchronised over git
+
+# Stata dataset and output files
+*.dta
+*.gph
+*.log
+*.smcl
+*.stpr
+*.stsem
+
+# Other data
+*data*.txt
+
+# macOS Finder display preferences
+.DS_Store
