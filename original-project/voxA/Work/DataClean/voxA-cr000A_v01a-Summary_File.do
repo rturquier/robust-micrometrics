@@ -14,7 +14,7 @@
 	local FileIn01	"April_data_2007.txt"			// Copy of the original VOX Decision data
 	local FileIn02	"April_2007_survey_data.txt"	// Copy of the original VOX Survey response data
 	
-	local FileIn03	"April_data_order question-2015.txt"	// Copy of the original VOX "order-of-the-decisions" data
+	local FileIn03	"April_data_order-question-2015.txt"	// Copy of the original VOX "order-of-the-decisions" data
 	
 	local NewIDin	"newid"							// A simpler id variable.
 	
@@ -238,7 +238,7 @@ assert !missing(session)
 
 label variable session "Session person participated in"
 note session : Numerical version of "session" \ Constructed from the string version (sessionOriginal) /*
-				*/ that came in "April_data_order question-2015.txt" \ `tag'
+				*/ that came in "April_data_order-question-2015.txt" \ `tag'
 
 
 	
