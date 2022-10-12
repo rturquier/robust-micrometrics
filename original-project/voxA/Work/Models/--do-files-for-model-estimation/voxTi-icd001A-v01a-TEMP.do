@@ -607,7 +607,7 @@ For each participant:
 ---------------------------------------------------
 *** Code to list the matrix.
 *
-local dirMAT		"C:/Users/mowilhel/Documents/voxT/Work/Models/Matrices" 
+local dirMAT		"/home/r.turquier/media/disk/_Users_remi_Documents_GitHub_robust-micrometrics/original-project/voxT/Work/Models/Matrices" 
 
 mata:
 	mata clear

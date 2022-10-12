@@ -5,7 +5,7 @@
 //	Drive:
 	local Drive "C"				// Change drive on which do-files are to be run, if necessary (e.g., "Q").
 	
-	local Root "`Drive':/Users/mowilhel/Documents/"
+	local Root "/home/r.turquier/media/disk/_Users_remi_Documents_GitHub_robust-micrometrics/original-project/"
 	
 	
 // Specify directories:
