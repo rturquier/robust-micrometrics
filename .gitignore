@@ -1,5 +1,8 @@
 # This lists the things that should not be synchronised over git
 
+# R
+.Rhistory
+
 # Stata dataset and output files
 *.dta
 *.gph
