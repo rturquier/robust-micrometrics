@@ -2,6 +2,9 @@
 
 # R
 .Rhistory
+.Rapp.history
+.Ruserdata
+.Rproj.user
 
 # Stata dataset and output files
 *.dta
