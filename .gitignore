@@ -5,6 +5,7 @@
 .Rapp.history
 .Ruserdata
 .Rproj.user
+.RData
 
 # Stata dataset and output files
 *.dta
@@ -16,6 +17,7 @@
 
 # Other data
 *data*.txt
+*.tex
 
 # macOS Finder display preferences
 .DS_Store
