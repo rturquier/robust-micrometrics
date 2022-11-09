@@ -115,7 +115,9 @@ texreg(LMS_reg, file = file.path(results_path,"LMS_reg_results.tex")) # EXPORT D
 S_reg <- lmrob.S(x=decisions_df$Ggov, y=decisions_df$h, control = lmrob.control(nRes = 20), trace.lev=1)
 
 # MM-estimation
-
+MM_reg <- lmrob(h ~ Ggov, data = decisions_df, method = "MM",
+      model = TRUE, y = FALSE,
+      singular.ok = TRUE, contrasts = NULL, offset = NULL, init = NULL)
 
 # MS-estimation
-
+# Gets implemented in case there are dummies in rob
