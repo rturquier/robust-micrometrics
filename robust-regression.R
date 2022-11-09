@@ -9,6 +9,7 @@ library(texreg)
 library(depthTools)
 library(xtable)
 library(L1pack)
+library(systemfit)
 #install.packages("")
 
 
@@ -44,8 +45,6 @@ print(xtable(donation_stats_df, type = "latex", file = file.path(results_path,"D
 
 # Boxplots
 
-# Hausman test
-#   -> to decide whether to use robust methods or not
 
 ####=====================  4. Donation location (alternatives to the mean)  ======================####
 
@@ -74,15 +73,15 @@ Q_n <- decisions_df %>% summarise(q_n = Qn(h)) %>% pivot_longer(everything())
 # Linear Fixed Effects Robust s.e. corresponds to assuming different variances at Low and High.
 
 # Low govt provision:  $4 -> $10 (income $46 -> $40)
-Low <- subset(decisions_df, Budget == 2 | Budget == 5)
-reg_low <- rlm(h ~ Ggov, data=Low)
+Low_df <- subset(decisions_df, Budget == 2 | Budget == 5)
+low_reg <- rlm(h ~ Ggov, data=Low)
 # Ho: crowd-out is -1 or a bigger negative number.
 summary(reg_low)
 texreg(reg_low, file = file.path(results_path,"Low_rob_reg_results.tex"))
 
 # High govt provision:  $28 -> $34 (income $46 -> $40)
-High <- subset(decisions_df, Budget == 4 | Budget == 6)
-reg_high <- rlm(h ~ Ggov, data=High)
+High_df <- subset(decisions_df, Budget == 4 | Budget == 6)
+high_reg <- rlm(h ~ Ggov, data=High_df)
 # Ho: crowd-out is -1 or a bigger negative number.
 summary(reg_high)
 texreg(reg_high, file = file.path(results_path,"High_rob_reg_results.tex"))
@@ -90,34 +89,69 @@ texreg(reg_high, file = file.path(results_path,"High_rob_reg_results.tex"))
 # STILL NEED TO INCLUDE FIXED-EFFECTS and ROBUST STANDARD ERRORS
 
 
-# LS-estimator -> Least Square Regression
-LS_reg <- lm(h ~ Ggov, data = decisions_df)
-summary(LS_reg)
-texreg(LS_reg, file = file.path(results_path,"LS_reg_results.tex"))
+# LS-estimator -> Least Square Regression --------------------------------------
+LS_low_reg <- lm(h ~ Ggov, data = Low_df)
+summary(LS_low_reg)
+texreg(LS_low_reg, file = file.path(results_path,"LS_low_reg_results.tex"))
 
-# M-estimation
-M_reg <- lad(h~ Ggov, data = decisions_df, method = "BR") # BR = Barrodale & Roberts method (default)
-summary(M_reg)
-texreg(M_reg, file = file.path(results_path,"M_reg_results.tex")) # EXPORT DOESN'T WORK
-
-# LTS-estimation -> Least Trimmed Sum of Squares
-LTS_reg <- ltsReg(h ~ Ggov, data = decisions_df)
-summary(LTS_reg)
-texreg(LTS_reg, file = file.path(results_path,"LTS_reg_results.tex")) # EXPORT DOESN'T WORK
+LS_high_reg <- lm(h ~ Ggov, data = High_df)
+summary(LS_high_reg)
+texreg(LS_high_reg, file = file.path(results_path,"LS_high_reg_results.tex"))
 
 
-# LMS-estimation -> Least Median Squares Regression
-LMS_reg <- lmsreg(h ~ Ggov, data = decisions_df)
-summary(LMS_reg)
-texreg(LMS_reg, file = file.path(results_path,"LMS_reg_results.tex")) # EXPORT DOESN'T WORK
 
-# S-estimation
-S_reg <- lmrob.S(x=decisions_df$Ggov, y=decisions_df$h, control = lmrob.control(nRes = 20), trace.lev=1)
+# M-estimation -> Median Regression --------------------------------------------
+M_low_reg <- lad(h~ Ggov, data = Low_df, method = "BR") # BR = Barrodale & Roberts method (default)
+summary(M_low_reg)
+texreg(M_low_reg, file = file.path(results_path,"M_low_reg_results.tex")) # EXPORT DOESN'T WORK
 
-# MM-estimation
-MM_reg <- lmrob(h ~ Ggov, data = decisions_df, method = "MM",
+M_high_reg <- lad(h~ Ggov, data = High_df, method = "BR") # BR = Barrodale & Roberts method (default)
+summary(M_high_reg)
+texreg(M_high_reg, file = file.path(results_path,"M_high_reg_results.tex")) # EXPORT DOESN'T WORK
+
+
+
+# LTS-estimation -> Least Trimmed Sum of Squares -------------------------------
+LTS_low_reg <- ltsReg(h ~ Ggov, data = Low_df)
+summary(LTS_low_reg)
+texreg(LTS_low_reg, file = file.path(results_path,"LTS_low_reg_results.tex")) # EXPORT DOESN'T WORK
+
+LTS_high_reg <- ltsReg(h ~ Ggov, data = High_df)
+summary(LTS_high_reg)
+texreg(LTS_high_reg, file = file.path(results_path,"LTS_high_reg_results.tex")) # EXPORT DOESN'T WORK
+
+
+
+# LMS-estimation -> Least Median Squares Regression ----------------------------
+LMS_low_reg <- lmsreg(h ~ Ggov, data = Low_df)
+summary(LMS_low_reg)
+texreg(LMS_low_reg, file = file.path(results_path,"LMS_low_reg_results.tex")) # EXPORT DOESN'T WORK
+
+LMS_high_reg <- lmsreg(h ~ Ggov, data = High_df)
+summary(LMS_high_reg)
+texreg(LMS_high_reg, file = file.path(results_path,"LMS_high_reg_results.tex")) # EXPORT DOESN'T WORK
+
+
+
+# S-estimation -----------------------------------------------------------------
+S_low_reg <- lmrob.S(x=Low_df$Ggov, y=Low_df$h, control = lmrob.control(nRes = 20), trace.lev=1)
+
+S_high_reg <- lmrob.S(x=High_df$Ggov, y=High_df$h, control = lmrob.control(nRes = 20), trace.lev=1)
+
+
+
+# MM-estimation ----------------------------------------------------------------
+MM_low_reg <- lmrob(h ~ Ggov, data = Low_df, method = "MM",
       model = TRUE, y = FALSE,
       singular.ok = TRUE, contrasts = NULL, offset = NULL, init = NULL)
 
+MM_high_reg <- lmrob(h ~ Ggov, data = High_df, method = "MM",
+                model = TRUE, y = FALSE,
+                singular.ok = TRUE, contrasts = NULL, offset = NULL, init = NULL)
 # MS-estimation
 # Gets implemented in case there are dummies in rob
+
+
+# Hausman test
+hausman.systemfit(MM_reg,high_reg)
+hausman.systemfit(MM_reg,low_reg)
