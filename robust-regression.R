@@ -11,6 +11,7 @@ library(xtable)
 library(L1pack)
 library(systemfit)
 library(lfe)
+library(base)
 #install.packages("lfe")
 
 
@@ -106,33 +107,34 @@ texreg(LS_high_reg, file = file.path(results_path,"LS_high_reg_results.tex"))
 # M-estimation -> Median Regression --------------------------------------------
 M_low_reg <- lad(h~ Ggov, data = Low_df, method = "BR") # BR = Barrodale & Roberts method (default)
 summary(M_low_reg)
-texreg(M_low_reg, file = file.path(results_path,"M_low_reg_results.tex")) # EXPORT DOESN'T WORK
+print(M_low_reg, file = file.path(results_path,"M_low_reg_results.tex")) # EXPORT DOESN'T WORK
 
 M_high_reg <- lad(h~ Ggov, data = High_df, method = "BR") # BR = Barrodale & Roberts method (default)
 summary(M_high_reg)
-texreg(M_high_reg, file = file.path(results_path,"M_high_reg_results.tex")) # EXPORT DOESN'T WORK
+print(M_high_reg, file = file.path(results_path,"M_high_reg_results.tex")) # EXPORT DOESN'T WORK
+
 
 
 
 # LTS-estimation -> Least Trimmed Sum of Squares -------------------------------
 LTS_low_reg <- ltsReg(h ~ Ggov, data = Low_df)
 summary(LTS_low_reg)
-texreg(LTS_low_reg, file = file.path(results_path,"LTS_low_reg_results.tex")) # EXPORT DOESN'T WORK
+print(LTS_low_reg, file = file.path(results_path,"LTS_low_reg_results.tex")) # EXPORT DOESN'T WORK
 
 LTS_high_reg <- ltsReg(h ~ Ggov, data = High_df)
 summary(LTS_high_reg)
-texreg(LTS_high_reg, file = file.path(results_path,"LTS_high_reg_results.tex")) # EXPORT DOESN'T WORK
+print(LTS_high_reg, file = file.path(results_path,"LTS_high_reg_results.tex")) # EXPORT DOESN'T WORK
 
 
 
 # LMS-estimation -> Least Median Squares Regression ----------------------------
 LMS_low_reg <- lmsreg(h ~ Ggov, data = Low_df)
 summary(LMS_low_reg)
-texreg(LMS_low_reg, file = file.path(results_path,"LMS_low_reg_results.tex")) # EXPORT DOESN'T WORK
+print(LMS_low_reg, file = file.path(results_path,"LMS_low_reg_results.tex")) # EXPORT DOESN'T WORK
 
 LMS_high_reg <- lmsreg(h ~ Ggov, data = High_df)
 summary(LMS_high_reg)
-texreg(LMS_high_reg, file = file.path(results_path,"LMS_high_reg_results.tex")) # EXPORT DOESN'T WORK
+print(LMS_high_reg, file = file.path(results_path,"LMS_high_reg_results.tex")) # EXPORT DOESN'T WORK
 
 
 
