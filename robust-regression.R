@@ -10,7 +10,8 @@ library(depthTools)
 library(xtable)
 library(L1pack)
 library(systemfit)
-#install.packages("")
+library(lfe)
+#install.packages("lfe")
 
 
 
@@ -68,26 +69,28 @@ med_abs_devia <- decisions_df %>% summarise(median_absolute_deviation = mad(h)) 
 # The Q(n) coefficient
 Q_n <- decisions_df %>% summarise(q_n = Qn(h)) %>% pivot_longer(everything())
 
-####=====================  6. Robust regression  ======================####
+####=====================  5. Linear Fixed Effects Regression  ======================####
+# Column (1) and (2) of table 2
 
 # Linear Fixed Effects Robust s.e. corresponds to assuming different variances at Low and High.
 
 # Low govt provision:  $4 -> $10 (income $46 -> $40)
 Low_df <- subset(decisions_df, Budget == 2 | Budget == 5)
-low_reg <- rlm(h ~ Ggov, data=Low)
+low_reg <- felm(h ~ Ggov, data=Low_df)
 # Ho: crowd-out is -1 or a bigger negative number.
-summary(reg_low)
-texreg(reg_low, file = file.path(results_path,"Low_rob_reg_results.tex"))
+summary(low_reg)
+texreg(low_reg, file = file.path(results_path,"Low_rob_reg_results.tex"))
 
 # High govt provision:  $28 -> $34 (income $46 -> $40)
 High_df <- subset(decisions_df, Budget == 4 | Budget == 6)
-high_reg <- rlm(h ~ Ggov, data=High_df)
+high_reg <- felm(h ~ Ggov, data=High_df)
 # Ho: crowd-out is -1 or a bigger negative number.
-summary(reg_high)
-texreg(reg_high, file = file.path(results_path,"High_rob_reg_results.tex"))
+summary(high_reg)
+texreg(high_reg, file = file.path(results_path,"High_rob_reg_results.tex"))
 
 # STILL NEED TO INCLUDE FIXED-EFFECTS and ROBUST STANDARD ERRORS
 
+####=====================  6. Robust regression  ======================####
 
 # LS-estimator -> Least Square Regression --------------------------------------
 LS_low_reg <- lm(h ~ Ggov, data = Low_df)
