@@ -6,3 +6,21 @@ datasets_path  <- "original-project/voxA/Work/Datasets/Derived/"
 decisions_df <- read_dta(
   file.path(datasets_path,"voxA-cr021A_v01a-DecisionsLONG.dta")
 )
+
+
+crowd_out_df <- decisions_df %>%
+  filter(z %in% c(50, 74)) %>%  
+  group_by(newid, GovtHigh) %>%
+  arrange(newid, GovtHigh, y) %>%
+  summarise(crowd_out = h - lag(h)) %>%
+  drop_na() %>%
+  mutate(relative_crowd_out = crowd_out / 6) %>%
+  mutate(GovtHigh = as.factor(GovtHigh))
+
+ggplot(decisions_df, aes(Budget, h)) + geom_point()
+
+ggplot(crowd_out_df,aes(GovtHigh, relative_crowd_out, color=GovtHigh)) + 
+  geom_boxplot(outlier.shape = NA, color="gray") +
+  geom_jitter(alpha = 0.4, width = 0.1) + 
+  theme_minimal()
+  
