@@ -17,7 +17,13 @@ crowd_out_df <- decisions_df %>%
   mutate(relative_crowd_out = crowd_out / 6) %>%
   mutate(GovtHigh = as.factor(GovtHigh))
 
-ggplot(decisions_df, aes(Budget, h)) + geom_point()
+ggplot(decisions_df, aes(factor(Budget), h)) +
+  geom_dotplot(binwidth = 0.5,
+               binaxis = "y",
+               stackdir = "center",
+               dotsize = 0.6,
+               stackratio = 1.7) +
+  theme_minimal()
 
 ggplot(crowd_out_df,aes(GovtHigh, relative_crowd_out, color=GovtHigh)) + 
   geom_boxplot(outlier.shape = NA, color="gray") +
