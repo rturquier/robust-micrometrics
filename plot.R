@@ -11,6 +11,12 @@ decisions_wide_df <- read_dta(
   file.path(datasets_path,"voxA-cr001A_v01a-DecisionsWIDE.dta")
 )
 
+demography_df <- read_dta(
+  file.path(datasets_path,"voxA-cr003A_v01a-SvyResponsesDemogRelig.dta")
+)
+
+demography_df <- demography_df %>% select(newid, female, fire)
+
 crowd_out_df <- decisions_df %>%
   filter(z %in% c(50, 74)) %>%  
   group_by(newid, GovtHigh) %>%
@@ -18,7 +24,8 @@ crowd_out_df <- decisions_df %>%
   summarise(crowd_out = h - lag(h)) %>%
   drop_na() %>%
   mutate(relative_crowd_out = crowd_out / 6) %>%
-  mutate(GovtHigh = as.factor(GovtHigh))
+  mutate(GovtHigh = as.factor(GovtHigh)) %>%
+  left_join(demography_df, by="newid")
 
 temp_df <- decisions_wide_df %>%
   select(newid, h04_y46, h10, h28_y46, h34)  %>%
@@ -39,6 +46,7 @@ ggplot(decisions_df, aes(factor(Budget), h)) +
 ggplot(crowd_out_df,aes(GovtHigh, relative_crowd_out, color=GovtHigh)) + 
   geom_boxplot(outlier.shape = NA, color="gray") +
   geom_jitter(alpha = 0.4, width = 0.1) + 
+  facet_wrap(vars(female)) +
   theme_minimal()
 
 
