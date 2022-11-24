@@ -40,4 +40,9 @@ ggplot(crowd_out_df,aes(GovtHigh, relative_crowd_out, color=GovtHigh)) +
   geom_boxplot(outlier.shape = NA, color="gray") +
   geom_jitter(alpha = 0.4, width = 0.1) + 
   theme_minimal()
-  
+
+
+ggplot(temp_df, aes(x = relative_crowd_out_low_external,
+                    y = relative_crowd_out_high_external)) +
+  geom_point(alpha=.2) +
+  theme_light()
