@@ -7,6 +7,9 @@ decisions_df <- read_dta(
   file.path(datasets_path,"voxA-cr021A_v01a-DecisionsLONG.dta")
 )
 
+decisions_wide_df <- read_dta(
+  file.path(datasets_path,"voxA-cr001A_v01a-DecisionsWIDE.dta")
+
 
 crowd_out_df <- decisions_df %>%
   filter(z %in% c(50, 74)) %>%  
@@ -16,6 +19,14 @@ crowd_out_df <- decisions_df %>%
   drop_na() %>%
   mutate(relative_crowd_out = crowd_out / 6) %>%
   mutate(GovtHigh = as.factor(GovtHigh))
+
+temp_df <- decisions_wide_df %>%
+  select(newid, h04_y46, h10, h28_y46, h34)  %>%
+  mutate(crowd_out_low_external  = h04_y46 - h10,
+         crowd_out_high_external =  h28_y46 - h34,
+         relative_crowd_out_low_external  =  crowd_out_low_external / 6,
+         relative_crowd_out_high_external =  crowd_out_high_external / 6)
+
 
 ggplot(decisions_df, aes(factor(Budget), h)) +
   geom_dotplot(binwidth = 0.5,
