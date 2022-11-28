@@ -28,13 +28,17 @@ temp_df <- decisions_wide_df %>%
          relative_crowd_out_high_external =  crowd_out_high_external / 6)
 
 
-ggplot(decisions_df, aes(factor(Budget), h)) +
+decisions_df %>%
+  filter(Budget %in% c(2, 5)) %>%
+  ggplot(aes(x = factor(Budget), y = h)) +
   geom_dotplot(binwidth = 0.5,
                binaxis = "y",
                stackdir = "center",
                dotsize = 0.6,
                stackratio = 1.7) +
-  theme_minimal()
+  geom_line(aes(group = newid), alpha=.1) +
+  theme_minimal() 
+
 
 ggplot(crowd_out_df,aes(GovtHigh, relative_crowd_out, color=GovtHigh)) + 
   geom_boxplot(outlier.shape = NA, color="gray") +
