@@ -30,7 +30,9 @@ temp_df <- decisions_wide_df %>%
 
 decisions_df %>%
   filter(Budget %in% c(2, 5)) %>%
-  ggplot(aes(x = factor(Budget), y = h)) +
+  mutate(Budget = factor(Budget),
+         Budget = fct_rev(Budget)) %>%
+  ggplot(aes(x = Budget, y = h)) +
   geom_dotplot(binwidth = 0.5,
                binaxis = "y",
                stackdir = "center",
