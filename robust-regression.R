@@ -16,9 +16,10 @@ library(lme4)
 library(officer)
 library(flextable)
 library(huxtable)
-#install.packages("huxtable")
-
-
+library(lmtest)
+library(sandwich)
+library(fixest)
+#install.packages("lmtest")
 
 datasets_path  <- "original-project/voxA/Work/Datasets/Derived/"
 results_path <- "original-project"
@@ -82,6 +83,11 @@ Q_n <- decisions_df %>% summarise(q_n = Qn(h)) %>% pivot_longer(everything())
 # Low govt provision:  $4 -> $10 (income $46 -> $40)
 Low_df <- subset(decisions_df, Budget == 2 | Budget == 5)
 low_reg <- felm(h ~ Ggov, data=Low_df)
+
+
+low_reg1 <- feols(h ~ Ggov, se="standard", data=Low_df)
+summary(low_reg1)
+coeftest(low_reg1, vcov = vcovHC(low_reg1, type = "HC1"))
 # Ho: crowd-out is -1 or a bigger negative number.
 summary(low_reg, robust=T)
 texreg(low_reg, file = file.path(results_path,"Low_rob_reg_results.tex"))
