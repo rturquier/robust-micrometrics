@@ -42,9 +42,16 @@ decisions_df %>%
   theme_minimal() 
 
 
-ggplot(crowd_out_df,aes(GovtHigh, relative_crowd_out, color=GovtHigh)) + 
-  geom_boxplot(outlier.shape = NA, color="gray") +
-  geom_jitter(alpha = 0.4, width = 0.1) + 
+ggplot(crowd_out_df, aes(x = GovtHigh,
+                         y = relative_crowd_out)) +
+  geom_dotplot(aes(color = GovtHigh, fill = GovtHigh),
+               binwidth = 0.05,
+               binaxis = "y",
+               stackdir = "center",
+               dotsize = 1.5,
+               stackratio = 1.7) +
+  geom_boxplot(color="#00000060", fill = "#00000000", outlier.shape = NA) +
+  stat_boxplot(geom = "errorbar", alpha=0.3, width=0.25) +
   theme_minimal()
 
 

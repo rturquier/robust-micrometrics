@@ -1,0 +1,15 @@
+Call:
+lad(formula = h ~ Ggov, data = Low_df, method = "BR")
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-2.600e+01 -5.000e+00  1.776e-16  1.000e+01  2.000e+01 
+
+Coefficients:
+            Estimate Std.Error Z value p-value
+(Intercept) 30.0000   3.3909    8.8473  0.0000
+Ggov        -1.0000   0.4452   -2.2460  0.0247
+
+Degrees of freedom: 170 total; 168 residual
+Scale estimate: 12.31481
+Log-likelihood: -655.7539 on 3 degrees of freedom
