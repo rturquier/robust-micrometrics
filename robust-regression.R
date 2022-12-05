@@ -12,7 +12,11 @@ library(L1pack)
 library(systemfit)
 library(lfe)
 library(base)
-#install.packages("lfe")
+library(lme4)
+library(officer)
+library(flextable)
+library(huxtable)
+#install.packages("huxtable")
 
 
 
@@ -79,17 +83,18 @@ Q_n <- decisions_df %>% summarise(q_n = Qn(h)) %>% pivot_longer(everything())
 Low_df <- subset(decisions_df, Budget == 2 | Budget == 5)
 low_reg <- felm(h ~ Ggov, data=Low_df)
 # Ho: crowd-out is -1 or a bigger negative number.
-summary(low_reg)
+summary(low_reg, robust=T)
 texreg(low_reg, file = file.path(results_path,"Low_rob_reg_results.tex"))
+
+
 
 # High govt provision:  $28 -> $34 (income $46 -> $40)
 High_df <- subset(decisions_df, Budget == 4 | Budget == 6)
 high_reg <- felm(h ~ Ggov, data=High_df)
 # Ho: crowd-out is -1 or a bigger negative number.
-summary(high_reg)
+summary(high_reg, robust=T)
 texreg(high_reg, file = file.path(results_path,"High_rob_reg_results.tex"))
 
-# STILL NEED TO INCLUDE FIXED-EFFECTS and ROBUST STANDARD ERRORS
 
 ####=====================  6. Robust regression  ======================####
 
@@ -112,7 +117,6 @@ print(M_low_reg, file = file.path(results_path,"M_low_reg_results.tex")) # EXPOR
 M_high_reg <- lad(h~ Ggov, data = High_df, method = "BR") # BR = Barrodale & Roberts method (default)
 summary(M_high_reg)
 print(M_high_reg, file = file.path(results_path,"M_high_reg_results.tex")) # EXPORT DOESN'T WORK
-
 
 
 
@@ -140,6 +144,8 @@ print(LMS_high_reg, file = file.path(results_path,"LMS_high_reg_results.tex")) #
 
 # S-estimation -----------------------------------------------------------------
 S_low_reg <- lmrob.S(x=Low_df$Ggov, y=Low_df$h, control = lmrob.control(nRes = 20), trace.lev=1)
+summary(S_low_reg)
+
 
 S_high_reg <- lmrob.S(x=High_df$Ggov, y=High_df$h, control = lmrob.control(nRes = 20), trace.lev=1)
 
@@ -158,5 +164,5 @@ MM_high_reg <- lmrob(h ~ Ggov, data = High_df, method = "MM",
 
 
 # Hausman test
-hausman.systemfit(MM_reg,high_reg)
-hausman.systemfit(MM_reg,low_reg)
+hausman.systemfit(M_high_reg,high_reg)
+hausman.systemfit(M_low_reg,low_reg)
