@@ -22,5 +22,8 @@
 # Regression results
 *.txt
 
+# plots
+plots/*
+
 # macOS Finder display preferences
 .DS_Store
