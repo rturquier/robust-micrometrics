@@ -19,5 +19,8 @@
 *data*.txt
 *.tex
 
+# Regression results
+*.txt
+
 # macOS Finder display preferences
 .DS_Store
