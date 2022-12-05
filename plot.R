@@ -1,5 +1,6 @@
 library(haven)
 library(tidyverse)
+library(DescTools)
 
 datasets_path  <- "original-project/voxA/Work/Datasets/Derived/"
 
@@ -44,3 +45,10 @@ ggplot(crowd_out_df, aes(x = GovtHigh,
   stat_boxplot(geom = "errorbar", alpha=0.3, width=0.25) +
   theme_minimal()
   
+# Estimations of location
+location_statistics <- crowd_out_df %>%
+  group_by(GovtHigh) %>%
+  summarise(mean = mean(relative_crowd_out),
+            trimmed_mean_05 = mean(relative_crowd_out, trim = 0.05),
+            median = median(relative_crowd_out),
+            hodges_lehman = DescTools::HodgesLehmann(relative_crowd_out))
