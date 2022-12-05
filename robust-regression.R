@@ -28,7 +28,13 @@ decisions_df <- read_dta(file.path(datasets_path,"voxA-cr021A_v01a-DecisionsLONG
 
 
 ####=====================  2. Functions  ======================####
-
+export_unconventional_regression <- function(regression_result, output_path){
+  regression_result %>%
+    summary() %>%
+    capture.output() %>%
+    paste0(collapse = "\n") %>%
+    cat(file = output_path)
+}
 
 ####=====================  3. Main code  ======================####
 ### ---- Measures of location and spread of donations ---- ###
@@ -118,7 +124,7 @@ texreg(LS_high_reg, file = file.path(results_path,"LS_high_reg_results.tex"))
 # M-estimation -> Median Regression --------------------------------------------
 M_low_reg <- lad(h~ Ggov, data = Low_df, method = "BR") # BR = Barrodale & Roberts method (default)
 summary(M_low_reg)
-print(M_low_reg, file = file.path(results_path,"M_low_reg_results.tex")) # EXPORT DOESN'T WORK
+M_low_reg %>% export_unconventional_regression("M_low_reg.txt")
 
 M_high_reg <- lad(h~ Ggov, data = High_df, method = "BR") # BR = Barrodale & Roberts method (default)
 summary(M_high_reg)
