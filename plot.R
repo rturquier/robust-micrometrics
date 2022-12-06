@@ -15,7 +15,7 @@ crowd_out_df <- decisions_df %>%
   arrange(newid, GovtHigh, y) %>%
   summarise(crowd_out = h - lag(h)) %>%
   drop_na() %>%
-  mutate(relative_crowd_out = crowd_out / 6) %>%
+  mutate(crowd_out_rate = crowd_out / 6) %>%
   mutate(GovtHigh = as.factor(GovtHigh))
 
 # Connected pairs plot
@@ -34,7 +34,7 @@ decisions_df %>%
 
 # Dot plot with boxplot
 ggplot(crowd_out_df, aes(x = GovtHigh,
-                         y = relative_crowd_out)) +
+                         y = crowd_out_rate)) +
   geom_dotplot(aes(color = GovtHigh, fill = GovtHigh),
                binwidth = 0.05,
                binaxis = "y",
@@ -48,7 +48,7 @@ ggplot(crowd_out_df, aes(x = GovtHigh,
 # Estimations of location
 location_statistics <- crowd_out_df %>%
   group_by(GovtHigh) %>%
-  summarise(mean = mean(relative_crowd_out),
-            trimmed_mean_05 = mean(relative_crowd_out, trim = 0.05),
-            median = median(relative_crowd_out),
-            hodges_lehman = DescTools::HodgesLehmann(relative_crowd_out))
+  summarise(mean = mean(crowd_out_rate),
+            trimmed_mean_05 = mean(crowd_out_rate, trim = 0.05),
+            median = median(crowd_out_rate),
+            hodges_lehman = DescTools::HodgesLehmann(crowd_out_rate))
