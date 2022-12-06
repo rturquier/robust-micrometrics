@@ -52,3 +52,15 @@ location_statistics <- crowd_out_df %>%
             trimmed_mean_05 = mean(crowd_out_rate, trim = 0.05),
             median = median(crowd_out_rate),
             hodges_lehman = DescTools::HodgesLehmann(crowd_out_rate))
+
+# Number and proportion of people of each type
+count_types <- crowd_out_df %>%
+  group_by(GovtHigh) %>%
+  mutate(pure_altruism   = crowd_out_rate == 1,
+         pure_warm_glow  = crowd_out_rate == 0,
+         impure_altruism = 0 < crowd_out_rate & crowd_out_rate < 1,
+         over_crowd_out  = crowd_out_rate > 1,
+         crowd_in        = crowd_out_rate < 0,
+         misbehaving     = over_crowd_out | crowd_in) %>%
+  summarise(across(pure_altruism:misbehaving,
+                   list(count = ~ sum(., na.rm = TRUE), proportion = mean)))
