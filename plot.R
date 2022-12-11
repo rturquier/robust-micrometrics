@@ -39,11 +39,20 @@ ggplot(crowd_out_df, aes(x = GovtHigh,
                binwidth = 0.05,
                binaxis = "y",
                stackdir = "center",
-               dotsize = 1.5,
+               dotsize = 1.8,
                stackratio = 1.7) +
-  geom_boxplot(color="#00000060", fill = "#00000000", outlier.shape = NA) +
-  stat_boxplot(geom = "errorbar", alpha=0.3, width=0.25) +
-  theme_minimal()
+  geom_boxplot(color="#00000055",
+               fill = "#00000000",
+               outlier.shape = NA,
+               width = 0.3) +
+  stat_boxplot(geom = "errorbar", alpha=0.25, width=0.2) +
+  labs(x = "External contribution", y = "Crowd-out rate") +
+  scale_x_discrete(labels = c("Low\n(4$ → 10$)", "High\n(28$ → 34$)")) +
+  scale_y_continuous(breaks = -3:4, 
+                     labels = c("-300%","", "", "0%", "100%", "", "", "400%"),
+                     minor_breaks = c(0.5)) +
+  theme_minimal() +
+  theme(legend.position="none")
   
 # Estimations of location
 location_statistics <- crowd_out_df %>%
