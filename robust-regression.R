@@ -41,10 +41,8 @@ get_p_value_of_full_crowd_out_rejection <- function(model) {
   # We count 85 observations because we have participant fixed effect.
   degrees_of_freedom <- 85 - 1
   
-  p_value_one_tailed <- 1 - pt(t_stat, degrees_of_freedom)
-  p_value_two_tailed <- p_value_one_tailed / 2
-  
-  return(p_value_two_tailed)
+  p_value <- 1 - pt(t_stat, degrees_of_freedom)
+  return(p_value)
 }
 
 
