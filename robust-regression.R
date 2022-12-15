@@ -39,7 +39,7 @@ summary(LAD_high_reg)
 
 # M-estimation -> kappa standard 1.345
 M_low1345_reg <- rlm(
-  h ~ Ggov,
+  h ~ 0 + Ggov + factor(newid),
   data = Low_df,
   init = "ls",
   psi = psi.huber,
@@ -58,7 +58,7 @@ texreg(M_low1345_reg, file = file.path(results_path,
                                        "M_low1345_reg_results.tex"))
 
 M_high1345_reg <- rlm(
-  h ~ Ggov,
+  h ~ 0 + Ggov + factor(newid),
   data = High_df,
   init = "ls",
   psi = psi.huber,
