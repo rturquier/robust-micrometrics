@@ -129,13 +129,13 @@ high_reg <- felm(h ~ Ggov + factor(newid), data = High_df)
 summary(high_reg)
 
 # Hausman test: LAD vs. OLS
-hausman.systemfit(LAD_high_reg,high_reg)
 hausman.systemfit(LAD_low_reg,low_reg)
+hausman.systemfit(LAD_high_reg,high_reg)
 
 # Hausman test: LAD vs. M
-hausman.systemfit(LAD_high_reg,M_high1345_reg)
 hausman.systemfit(LAD_low_reg,M_low1345_reg)
+hausman.systemfit(LAD_high_reg,M_high1345_reg)
 
 # Hausman test: M vs. OLS
-hausman.systemfit(M_high1345_reg,high_reg)
 hausman.systemfit(M_low1345_reg,low_reg)
+hausman.systemfit(M_high1345_reg,high_reg)
