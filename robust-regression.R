@@ -17,13 +17,13 @@ decisions_df <- read_dta(
 # Column (1) and (2) of table 2
 # Low govt provision:  $4 -> $10 (income $46 -> $40)
 Low_df <- subset(decisions_df, Budget == 2 | Budget == 5)
-low_reg <- felm(h ~ Ggov, data=Low_df)
+low_reg <- felm(h ~ Ggov | newid, data=Low_df)
 summary(low_reg, robust=T)
 texreg(low_reg, file = file.path(results_path,"Low_rob_reg_results.tex"))
 
 # High govt provision:  $28 -> $34 (income $46 -> $40)
 High_df <- subset(decisions_df, Budget == 4 | Budget == 6)
-high_reg <- felm(h ~ Ggov, data=High_df)
+high_reg <- felm(h ~ Ggov | newid, data=High_df)
 summary(high_reg, robust=T)
 texreg(high_reg, file = file.path(results_path,"High_rob_reg_results.tex"))
 
