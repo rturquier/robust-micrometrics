@@ -5,6 +5,7 @@ library(L1pack)
 library(MASS)
 library(systemfit)
 library(tidyverse)
+library(texreg)
 
 datasets_path  <- "original-project/voxA/Work/Datasets/Derived/"
 results_path <- "original-project"
@@ -57,6 +58,12 @@ low_reg <- felm(h ~ Ggov | newid, data=Low_df)
 summary(low_reg)
 low_reg %>% get_p_value_of_full_crowd_out_rejection()
 
+
+
+
+
+
+
 texreg(low_reg, file = file.path(results_path,"Low_rob_reg_results.tex"))
 
 # High govt provision:  $28 -> $34 (income $46 -> $40)
@@ -77,7 +84,7 @@ LAD_low_reg %>% get_p_value_of_full_crowd_out_rejection()
 
 LAD_high_reg <- lad(h ~ 0 + Ggov+ factor(newid), data = High_df, method = "BR")
 summary(LAD_high_reg)
-
+LAD_high_reg %>% get_p_value_of_full_crowd_out_rejection()
 
 # M-estimation -> kappa standard 1.345
 M_low1345_reg <- rlm(
@@ -121,14 +128,21 @@ texreg(M_high1345_reg, file = file.path(results_path,
                                         "M_high1345_reg_results.tex"))
 
 #### --------- Hausman test
+# Gives the same standard errors and coefficients but not displays them nicely.
+# These estimations objects have the same length than the LAD and M objects. 
+low_reg <- felm(h ~ Ggov + factor(newid), data = Low_df)
+summary(low_reg)
+high_reg <- felm(h ~ Ggov + factor(newid), data = High_df)
+summary(high_reg)
+
 # Hausman test: LAD vs. OLS
 hausman.systemfit(LAD_high_reg,high_reg)
 hausman.systemfit(LAD_low_reg,low_reg)
 
 # Hausman test: LAD vs. M
-hausman.systemfit(LAD_high_reg,M_high_reg)
-hausman.systemfit(LAD_low_reg,M_low_reg)
+hausman.systemfit(LAD_high_reg,M_high1345_reg)
+hausman.systemfit(LAD_low_reg,M_low1345_reg)
 
 # Hausman test: M vs. OLS
-hausman.systemfit(M_high_reg,high_reg)
-hausman.systemfit(M_low_reg,low_reg)
+hausman.systemfit(M_high1345_reg,high_reg)
+hausman.systemfit(M_low1345_reg,low_reg)
