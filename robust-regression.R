@@ -89,14 +89,14 @@ Q_n <- decisions_df %>% summarise(q_n = Qn(h)) %>% pivot_longer(everything())
 # Low govt provision:  $4 -> $10 (income $46 -> $40)
 Low_df <- subset(decisions_df, Budget == 2 | Budget == 5)
 low_reg <- felm(h ~ Ggov, data=Low_df)
-
-
-low_reg1 <- feols(h ~ Ggov, se="standard", data=Low_df)
-summary(low_reg1)
-coeftest(low_reg1, vcov = vcovHC(low_reg1, type = "HC1"))
-# Ho: crowd-out is -1 or a bigger negative number.
 summary(low_reg, robust=T)
 texreg(low_reg, file = file.path(results_path,"Low_rob_reg_results.tex"))
+
+
+#low_reg1 <- feols(h ~ Ggov, se="standard", data=Low_df)
+#summary(low_reg1)
+#coeftest(low_reg1, vcov = vcovHC(low_reg1, type = "HC1"))
+# Ho: crowd-out is -1 or a bigger negative number.
 
 
 
@@ -110,25 +110,92 @@ texreg(high_reg, file = file.path(results_path,"High_rob_reg_results.tex"))
 
 ####=====================  6. Robust regression  ======================####
 
-# LS-estimator -> Least Square Regression --------------------------------------
-LS_low_reg <- lm(h ~ Ggov, data = Low_df)
-summary(LS_low_reg)
-texreg(LS_low_reg, file = file.path(results_path,"LS_low_reg_results.tex"))
 
-LS_high_reg <- lm(h ~ Ggov, data = High_df)
-summary(LS_high_reg)
-texreg(LS_high_reg, file = file.path(results_path,"LS_high_reg_results.tex"))
+# LAD-estimation -> Least Absolute Deviation Regression --------------------------------------------
+LAD_low_reg <- lad(h~ Ggov, data = Low_df, method = "BR") # BR = Barrodale & Roberts method (default)
+summary(LAD_low_reg)
+LAD_low_reg %>% export_unconventional_regression("LAD_low_reg.txt")
+
+LAD_high_reg <- lad(h~ Ggov, data = High_df, method = "BR") # BR = Barrodale & Roberts method (default)
+summary(LAD_high_reg)
+print(LAD_high_reg, file = file.path(results_path,"LAD_high_reg_results.tex")) # EXPORT DOESN'T WORK
 
 
 
-# M-estimation -> Median Regression --------------------------------------------
-M_low_reg <- lad(h~ Ggov, data = Low_df, method = "BR") # BR = Barrodale & Roberts method (default)
-summary(M_low_reg)
-M_low_reg %>% export_unconventional_regression("M_low_reg.txt")
+# M-estimation -> kappa standard 1.345 -----------------------------------------
+M_low1345_reg <- rlm(Low_df$Ggov,Low_df$h,
+                 init = "ls", psi = psi.huber,
+                 scale.est = "Huber", k2 = 1.345,
+                 method = "M",
+                 maxit = 20, acc = 1e-4, test.vec = "resid", lqs.control = NULL)
+summary(M_low1345_reg)
+texreg(M_low1345_reg, file = file.path(results_path,"M_low1345_reg_results.tex"))
 
-M_high_reg <- lad(h~ Ggov, data = High_df, method = "BR") # BR = Barrodale & Roberts method (default)
-summary(M_high_reg)
-print(M_high_reg, file = file.path(results_path,"M_high_reg_results.tex")) # EXPORT DOESN'T WORK
+M_high1345_reg <- rlm(High_df$Ggov,High_df$h,
+                 init = "ls", psi = psi.huber,
+                 scale.est = "Huber", k2 = 1.345,
+                 method = "M",
+                 maxit = 20, acc = 1e-4, test.vec = "resid", lqs.control = NULL)
+summary(M_high1345_reg)
+texreg(M_high1345_reg, file = file.path(results_path,"M_high1345_reg_results.tex"))
+
+
+
+# M-estimation -> kappa low 0.345 ------------------------------------------------
+M_low0345_reg <- rlm(Low_df$Ggov,Low_df$h,
+                 init = "ls", psi = psi.huber,
+                 scale.est = "Huber", k2 = 0.345,
+                 method = "M",
+                 maxit = 20, acc = 1e-4, test.vec = "resid", lqs.control = NULL)
+summary(M_low0345_reg)
+texreg(M_low0345_reg, file = file.path(results_path,"M_low0345_reg_results.tex"))
+
+M_high0345_reg <- rlm(High_df$Ggov,High_df$h,
+                  init = "ls", psi = psi.huber,
+                  scale.est = "Huber", k2 = 0.345,
+                  method = "M",
+                  maxit = 20, acc = 1e-4, test.vec = "resid", lqs.control = NULL)
+summary(M_high0345_reg)
+texreg(M_high0345_reg, file = file.path(results_path,"M_high0345_reg_results.tex"))
+
+
+
+# M-estimation -> kappa high 2.345 -----------------------------------------
+M_low2345_reg <- rlm(Low_df$Ggov,Low_df$h,
+                 init = "ls", psi = psi.huber,
+                 scale.est = "Huber", k2 = 2.345,
+                 method = "M",
+                 maxit = 20, acc = 1e-4, test.vec = "resid", lqs.control = NULL)
+summary(M_low2345_reg)
+texreg(M_low2345_reg, file = file.path(results_path,"M_low2345_reg_results.tex"))
+
+M_high2345_reg <- rlm(High_df$Ggov,High_df$h,
+                  init = "ls", psi = psi.huber,
+                  scale.est = "Huber", k2 = 2.345,
+                  method = "M",
+                  maxit = 20, acc = 1e-4, test.vec = "resid", lqs.control = NULL)
+summary(M_high2345_reg)
+texreg(M_high2345_reg, file = file.path(results_path,"M_high2345_reg_results.tex"))
+
+
+
+
+
+# Hausman test: LAD vs. OLS
+hausman.systemfit(LAD_high_reg,high_reg)
+hausman.systemfit(LAD_low_reg,low_reg)
+
+# Hausman test: LAD vs. M
+hausman.systemfit(LAD_high_reg,M_high_reg)
+hausman.systemfit(LAD_low_reg,M_low_reg)
+
+# Hausman test: M vs. OLS
+hausman.systemfit(M_high_reg,high_reg)
+hausman.systemfit(M_low_reg,low_reg)
+
+
+
+
 
 
 
@@ -175,6 +242,4 @@ MM_high_reg <- lmrob(h ~ Ggov, data = High_df, method = "MM",
 # Gets implemented in case there are dummies in rob
 
 
-# Hausman test
-hausman.systemfit(M_high_reg,high_reg)
-hausman.systemfit(M_low_reg,low_reg)
+
