@@ -31,10 +31,10 @@ texreg(high_reg, file = file.path(results_path,"High_rob_reg_results.tex"))
 #### --------- Robust regressions
 # Least Absolute Deviation (LAD) Regression
 # BR = Barrodale & Roberts method (default)
-LAD_low_reg <- lad(h ~ Ggov, data = Low_df, method = "BR") 
+LAD_low_reg <- lad(h ~ 0 + Ggov + factor(newid), data = Low_df, method = "BR") 
 summary(LAD_low_reg)
 
-LAD_high_reg <- lad(h ~ Ggov, data = High_df, method = "BR")
+LAD_high_reg <- lad(h ~ 0 + Ggov+ factor(newid), data = High_df, method = "BR")
 summary(LAD_high_reg)
 
 # M-estimation -> kappa standard 1.345
