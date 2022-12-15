@@ -58,13 +58,8 @@ low_reg <- felm(h ~ Ggov | newid, data=Low_df)
 summary(low_reg)
 low_reg %>% get_p_value_of_full_crowd_out_rejection()
 
-
-
-
-
-
-
 texreg(low_reg, file = file.path(results_path,"Low_rob_reg_results.tex"))
+
 
 # High govt provision:  $28 -> $34 (income $46 -> $40)
 High_df <- subset(decisions_df, Budget == 4 | Budget == 6)
