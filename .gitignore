@@ -19,6 +19,9 @@
 *data*.txt
 *.tex
 
+# Regression results
+*.txt
+
 # plots
 plots/*
 
