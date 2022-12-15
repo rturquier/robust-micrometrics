@@ -38,21 +38,41 @@ LAD_high_reg <- lad(h ~ Ggov, data = High_df, method = "BR")
 summary(LAD_high_reg)
 
 # M-estimation -> kappa standard 1.345
-M_low1345_reg <- rlm(Low_df$Ggov,Low_df$h,
-                 init = "ls", psi = psi.huber,
-                 scale.est = "Huber", k2 = 1.345,
-                 method = "M",
-                 maxit = 20, acc = 1e-4, test.vec = "resid", lqs.control = NULL)
+M_low1345_reg <- rlm(
+  h ~ Ggov,
+  data = Low_df,
+  init = "ls",
+  psi = psi.huber,
+  scale.est = "Huber",
+  k2 = 1.345,
+  method = "M",
+  maxit = 20,
+  acc = 1e-4,
+  test.vec = "resid",
+  lqs.control = NULL
+)
+
 summary(M_low1345_reg)
+
 texreg(M_low1345_reg, file = file.path(results_path,
                                        "M_low1345_reg_results.tex"))
 
-M_high1345_reg <- rlm(High_df$Ggov,High_df$h,
-                 init = "ls", psi = psi.huber,
-                 scale.est = "Huber", k2 = 1.345,
-                 method = "M",
-                 maxit = 20, acc = 1e-4, test.vec = "resid", lqs.control = NULL)
+M_high1345_reg <- rlm(
+  h ~ Ggov,
+  data = High_df,
+  init = "ls",
+  psi = psi.huber,
+  scale.est = "Huber",
+  k2 = 1.345,
+  method = "M",
+  maxit = 20,
+  acc = 1e-4,
+  test.vec = "resid",
+  lqs.control = NULL
+)
+
 summary(M_high1345_reg)
+
 texreg(M_high1345_reg, file = file.path(results_path, 
                                         "M_high1345_reg_results.tex"))
 
