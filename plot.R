@@ -66,7 +66,7 @@ location_statistics <- crowd_out_df %>%
 
 # Number and proportion of people of each type
 count_types <- crowd_out_df %>%
-  group_by(GovtHigh) %>%
+  ungroup() %>%
   mutate(pure_altruism   = crowd_out_rate == 1,
          pure_warm_glow  = crowd_out_rate == 0,
          impure_altruism = 0 < crowd_out_rate & crowd_out_rate < 1,
@@ -74,4 +74,5 @@ count_types <- crowd_out_df %>%
          crowd_in        = crowd_out_rate < 0,
          misbehaving     = over_crowd_out | crowd_in) %>%
   summarise(across(pure_altruism:misbehaving,
-                   list(count = ~ sum(., na.rm = TRUE), proportion = mean)))
+                   list(count = ~ sum(., na.rm = TRUE), proportion = mean))) %>%
+  pivot_longer(everything())
